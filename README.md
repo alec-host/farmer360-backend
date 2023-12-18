@@ -41,4 +41,5 @@ Start the server
 ## Tech Stack
 
 * [NodeJS](https://nodejs.org/)
-* [Redux](https://redux.js.org/)
+* [Redis](https://redis.io/docs/connect/clients/nodejs/)
+* [Appwrite](https://appwrite.io/)
