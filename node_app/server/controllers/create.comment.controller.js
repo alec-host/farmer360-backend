@@ -6,18 +6,19 @@ const { commentSearch } = require('../model/search.comment.model');
 
 exports.CreateNewComment = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
-        const {posted_comment,owner_reference_number,full_name,date_created} = req.body;
+        const {post_uuid,posted_comment,owner_reference_number,full_name,date_created} = req.body;
         console.log(req.body);
         try{
             const user_found = await userSearch(owner_reference_number);
             if(parseInt(user_found.total) === 1){
                 const create_comment = {
-                                        comment_uuid:"CMT"+uuidv4(),
-                                        comment:posted_comment,
-                                        owner_reference_number:owner_reference_number,
-                                        commenters_name:full_name,
-                                        date_created:date_created
-                                    };
+                                            comment_uuid:"CMT"+uuidv4(),
+                                            comment:posted_comment,
+                                            story_uuid:post_uuid,
+                                            owner_reference_number:owner_reference_number,
+                                            commenters_name:full_name,
+                                            date_created:date_created
+                                       };
                 console.log(create_comment);
                 const comment = await model.createNewComment(create_comment);
                 console.log(comment);

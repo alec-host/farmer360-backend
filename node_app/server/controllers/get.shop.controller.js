@@ -1,5 +1,4 @@
 const { AppwriteException } = require('node-appwrite');
-const model = require('../model/update.shop.model');
 const { mailSearch } = require('../model/search.email.model');
 const { shopSearch } = require('../model/search.shop.model');
 

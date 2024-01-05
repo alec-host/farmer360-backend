@@ -1,13 +1,28 @@
 const { AppwriteException } = require('node-appwrite');
 const { compare } = require('bcrypt');
 const { mailSearch } = require('../model/search.email.model');
+const { mailBusinessSearch } = require('../model/search.email.business.model');
 
 exports.UserLogin = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
-        const {username,password} = req.body;
+        const {username,password,account_type} = req.body;
         try{
-            const found = await mailSearch(username);
-            console.log(found);
+
+            let found = {};
+
+            switch(''+account_type.trim()){
+                case "farmer": 
+                    found = await mailSearch(username);
+                    console.log('farmer');
+                break;
+                case "business": 
+                    found = await mailBusinessSearch(username);
+                    console.log('business');
+                break;
+                default:
+                break;
+            }
+
             if(found.total == 1){
                 const allowed_access = await compare(password,found?.documents[0]?.password);
                 if(allowed_access){

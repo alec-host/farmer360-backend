@@ -7,7 +7,7 @@ const { SYSTEM_ADMIN_NAME, SYSTEM_ADMIN_UUID } = require('../constants/constants
 
 exports.CreateNewInbox = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
-        const {action,sender_uuid,recipient_uuid,subject,body,date_created} = req.body;
+        const {action,sender_uuid,sender_name,recipient_uuid,subject,body,date_created} = req.body;
         try{ 
 
             let inbox = {};
@@ -24,7 +24,18 @@ exports.CreateNewInbox = async(req,res) => {
                     sender_name:full_name,
                     sender_uuid:sender_uuid,
                     date_created:date_created
-                };                
+                };
+            }else if(action === "business"){
+                exist = await userSearch(recipient_uuid); 
+                inbox = {
+                    message_uuid:"MSG"+uuidv4(),
+                    subject:"[Business Opportunity]",
+                    body:body,
+                    recipient_uuid:recipient_uuid,
+                    sender_name:sender_name,
+                    sender_uuid:sender_uuid,
+                    date_created:date_created
+                };                                
             }else{       
                 exist = await userSearch(recipient_uuid); 
                 inbox = {

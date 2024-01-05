@@ -1,10 +1,10 @@
 const { AppwriteException } = require('node-appwrite');
-const { mailSearch } = require('../model/search.email.model');
-const { phoneSearch } = require('../model/search.phone.model');
-const { updateUserDetails } = require('../model/update.user.model');
+const { phoneBusinessSearch } = require('../model/search.phone.business.model');
+const { mailBusinessSearch } = require('../model/search.email.business.model');
+const { updateBusinessDetails } = require('../model/update.business.model');
 const { encrypt } = require('../services/CRYPTO');
 
-exports.UpdateUserProfileDetails = async(req,res) => {
+exports.UpdateBusinessProfileDetails = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
        
         const { action,phone,email,database_id,table_id,record_id } = req.body;
@@ -48,15 +48,15 @@ exports.UpdateUserProfileDetails = async(req,res) => {
 
         try{
 
-            const phone_found = await phoneSearch(phone);
-            const email_found = await mailSearch(email);
+            const phone_found = await phoneBusinessSearch(phone);
+            const email_found = await mailBusinessSearch(email);
 
             const db_configs = {database_id,table_id,record_id};
             
             if(phone_found.total == 1){
                 if(email_found.total == 1){
-                    const user = await updateUserDetails(db_configs,json);
-                    const updated_data = await mailSearch(user.email);
+                    const user = await updateBusinessDetails(db_configs,json);
+                    const updated_data = await mailBusinessSearch(user.email);
                     console.log(updated_data);
                     console.log('ttttttttttttttttttttttttttttttttttt');
                     res.status(200).json({
