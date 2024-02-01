@@ -8,7 +8,7 @@ const { encrypt } = require('../services/CRYPTO');
 exports.CreateNewBusinessAccount = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
         console.log(req.body);
-        const {business_name,email,phone,owner_full_name,subscription,country,password,date_created} = req.body;
+        const {business_name,email,phone,owner_full_name,subscription,city,country,password,date_created} = req.body;
 
         try{
             const email_found = await mailBusinessSearch(email);
@@ -23,6 +23,7 @@ exports.CreateNewBusinessAccount = async(req,res) => {
                                             phone:phone,
                                             owner_full_name:owner_full_name,
                                             subscription:subscription,
+                                            city:city,
                                             country:country,
                                             password:hashed_password,
                                             date_created:date_created

@@ -1,11 +1,8 @@
 const {v4:uuidv4} = require('uuid');
 const { AppwriteException } = require('node-appwrite');
-const { mailSearch } = require('../model/search.email.model');
-const { shopSearch } = require('../model/search.shop.model');
 const { productSearch } = require('../model/search.product.model');
 const { createNewProduct } = require('../model/create.product.model');
 const { getProduct } = require('../model/get.product.model');
-const { CreateFile } = require('./create.file.controller');
 const { mediaFileupload } = require('../services/BUCKET.STORE');
 const { APP_WRITE_PROJECT_ID, APP_WRITE_BUCKET_ID } = require('../constants/constants');
 
@@ -19,7 +16,7 @@ exports.CreateNewProduct = async(req,res) => {
             console.log(req.file.path);
             console.log(original_file_name);
             const file_upload = await mediaFileupload(req.file.path,original_file_name);
-            console.log(file_upload);
+          
             if(file_upload.chunksUploaded >= 1){
                 const image_url = `https://cloud.appwrite.io/v1/storage/buckets/${APP_WRITE_BUCKET_ID}/files/${file_upload.$id}/view?project=${APP_WRITE_PROJECT_ID}&mode=admin`;
 
@@ -35,9 +32,7 @@ exports.CreateNewProduct = async(req,res) => {
                                     date_created:date_created
                                 };
                                 
-                console.log(product);
-                const exist = await productSearch(product.product_reference_number); 
-                //console.log(exist.total);                
+                const exist = await productSearch(product.product_reference_number);                 
                 if(exist.total === 0){              
                         const created_product = await createNewProduct(product);
                         if(product.owner_reference_number === created_product.owner_reference_number){

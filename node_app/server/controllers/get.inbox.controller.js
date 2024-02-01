@@ -9,14 +9,15 @@ exports.GetInbox = async(req,res) => {
         try{
             const mail_found = await mailSearch(email);
             const inbox_found = await getInbox(owner_reference_number);
-            console.log(mail_found);
-            if(mail_found.total === 1){
+            if(parseInt(mail_found.total) === 1){
                 if(inbox_found.total > 0){
                     if(mail_found.owner_reference_number === inbox_found.recipient_uuid){
+                        console.log(inbox_found.documents);
+                        const filtered_array = inbox_found.documents.filter((item) => item.recipient_uuid === owner_reference_number || item.sender_uuid === owner_reference_number);
                         res.status(200).json({
                             success: true,
                             error: false,
-                            data: inbox_found.documents,
+                            data: filtered_array,
                             message: "Inbox list."
                         });
                     }

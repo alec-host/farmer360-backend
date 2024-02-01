@@ -13,14 +13,14 @@ exports.GetComments = async(req,res) => {
                     let _last_id = '0';
                     if(parseInt(_page) >= 1){
                         if(parseInt(_page) > 1){
-                            const pageOne = await getComments(parseInt(_limit),story_uuid,_last_id);
+                            const pageOne = await getComments(parseInt(_limit),story_uuid,_last_id,0);
                             _last_id = pageOne.documents[pageOne.documents.length - 1].$id;
                         }else{
                             _last_id = '0';
                         }
                         console.log(_page);
                         console.log(_last_id);
-                        comments_found = await getComments(parseInt(_limit),story_uuid,_last_id);
+                        comments_found = await getComments(parseInt(_limit),story_uuid,_last_id,0);
                         res.status(200).json({
                             success: true,
                             error: false,

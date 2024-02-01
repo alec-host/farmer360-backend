@@ -15,8 +15,8 @@ exports.ModifyShop = async(req,res) => {
                 json = {name,phone_number,about};
             break;
             case "socials":
-                const {website_url,facebook_link} = req.body;
-                json = {website_url,facebook_link};
+                const {website_url,facebook_link,instagram_url} = req.body;
+                json = {website_url,facebook_link,instagram_url};
             break;
         };
 

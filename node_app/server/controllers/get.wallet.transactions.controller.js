@@ -1,31 +1,33 @@
 const { AppwriteException } = require('node-appwrite');
+const model = require('../model/update.shop.model');
 const { userSearch } = require('../model/search.user.model');
-const { getAllComments } = require('../model/get.comments.all.model');
+const { getWalletTransactionByUserID } = require('../model/get.wallet.transaction');
 
-exports.GetAllComments = async(req,res) => {
+exports.GetWalletTransactionByUserID = async(req,res) => {
     const {owner_reference_number} = req.query;
     if(owner_reference_number){ 
         try{
             const user_found = await userSearch(owner_reference_number);
             if(user_found.total === 1){
-                if(owner_reference_number === user_found.documents[0]?.reference_number){
-                    const comments_found = await getAllComments(0);
+                transaction_found = await getWalletTransactionByUserID(owner_reference_number);
+                if(owner_reference_number === transaction_found.documents[0].reference_number){
                     res.status(200).json({
                         success: true,
                         error: false,
-                        data: comments_found.documents,
-                        message: "Comments list with a size:-"+comments_found.total
+                        data: transaction_found.documents,
+                        message: "Transaction found."
                     });
-                } 
+                }
             }else{
-                res.status(200).json({
+                res.status(404).json({
                     success: false,
                     error: true,
-                    message: "User does not exist."
-                });            
+                    message: "User not found."
+                }); 
             }
         }catch(e){
             if(e instanceof AppwriteException){
+                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

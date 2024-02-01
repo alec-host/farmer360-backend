@@ -7,7 +7,7 @@ const { encrypt } = require('../services/CRYPTO');
 
 exports.CreateNewUser = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
-        const {first_name,last_name,email,entity_type,phone,country,date_created,password,subscription} = req.body;
+        const {first_name,last_name,email,entity_type,phone,city,country,date_created,password,subscription} = req.body;
     
         try{
             const email_found = await mailSearch(email);
@@ -22,6 +22,7 @@ exports.CreateNewUser = async(req,res) => {
                                             entity_type:entity_type,
                                             email:email,
                                             msisdn:phone,
+                                            city:city,
                                             country:country,
                                             date_created:date_created,
                                             password:hashed_password,

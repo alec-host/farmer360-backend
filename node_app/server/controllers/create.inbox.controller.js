@@ -36,7 +36,10 @@ exports.CreateNewInbox = async(req,res) => {
                     sender_uuid:sender_uuid,
                     date_created:date_created
                 };                                
-            }else{       
+            }else{ 
+                console.log(action);
+                console.log(sender_uuid);  
+                console.log(recipient_uuid);    
                 exist = await userSearch(recipient_uuid); 
                 inbox = {
                     message_uuid:"MSG"+uuidv4(),

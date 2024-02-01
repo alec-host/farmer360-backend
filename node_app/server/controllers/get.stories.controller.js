@@ -18,14 +18,12 @@ exports.GetStories = async(req,res) => {
                     let _last_id = '0';
                     if(parseInt(_page) >= 1){
                         if(parseInt(_page) > 1){
-                            const pageOne = await getStories(parseInt(_limit),_last_id);
+                            const pageOne = await getStories(parseInt(_limit),_last_id,0);
                             _last_id = pageOne.documents[pageOne.documents.length - 1].$id;
                         }else{
                             _last_id = '0';
                         }
-                        console.log(_page);
-                        console.log(_last_id);
-                        stories_found = await getStories(parseInt(_limit),_last_id);
+                        stories_found = await getStories(parseInt(_limit),_last_id,0);
                         console.log(stories_found);
                         res.status(200).json({
                             success: true,

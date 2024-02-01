@@ -8,22 +8,30 @@ const { APP_WRITE_BUCKET_ID, APP_WRITE_PROJECT_ID } = require('../constants/cons
 
 exports.CreateNewStory = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
-        const {posted_story,owner_reference_number,full_name,original_file_name,date_created,action} = req.body;
+        const {posted_story,topic,is_profane,owner_reference_number,full_name,original_file_name,date_created,action} = req.body;
         try{
             const user_found = await userSearch(owner_reference_number);
             console.log(user_found);
             console.log(action);
             if(parseInt(user_found.total) === 1){ 
+                let has_profane_words = 0;
+                if(is_profane === false){
+                    has_profane_words = 0;
+                }else{
+                    has_profane_words = 1;
+                }
                 if(action === "file"){
                     const file_upload = await mediaFileupload(req.file.path,original_file_name);
                     if(file_upload.chunksUploaded >= 1){
                         const image_url = `https://cloud.appwrite.io/v1/storage/buckets/${APP_WRITE_BUCKET_ID}/files/${file_upload.$id}/view?project=${APP_WRITE_PROJECT_ID}&mode=admin`;
                         const create_story = {
                                                 post_uuid:"STO"+uuidv4(),
+                                                topic:topic,
                                                 story:posted_story,
                                                 image_url:image_url,
                                                 user_uuid:owner_reference_number,
                                                 full_name:full_name,
+                                                has_profane_words:has_profane_words,
                                                 date_created:date_created
                                             };
                         console.log(create_story);
@@ -43,8 +51,10 @@ exports.CreateNewStory = async(req,res) => {
                     const create_story = {
                                             post_uuid:"STO"+uuidv4(),
                                             story:posted_story,
+                                            topic:topic,
                                             user_uuid:owner_reference_number,
                                             full_name:full_name,
+                                            has_profane_words:has_profane_words,
                                             date_created:date_created
                                         };  
                     console.log(create_story);

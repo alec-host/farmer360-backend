@@ -36,8 +36,6 @@ Start the server
   npm start
 ```
 
-
-
 ## Tech Stack
 
 * [NodeJS](https://nodejs.org/)
