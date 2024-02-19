@@ -7,7 +7,7 @@ const {APP_SERVER_PORT} = require("../constants/constants");
 const PORT = APP_SERVER_PORT;
 
 const corsOptions = {
-  origin: ["http://127.0.0.1:3000","https://farmer-service-platform.onrender.com"]
+  origin: ["http://127.0.0.1:3000","http://localhost"]
 };
 
 app.use(cors(corsOptions));
