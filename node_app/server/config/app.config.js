@@ -7,7 +7,7 @@ const {APP_SERVER_PORT} = require("../constants/constants");
 const PORT = APP_SERVER_PORT;
 
 const corsOptions = {
-  origin: ["http://127.0.0.1:3000","https://8e7e-197-232-61-247.ngrok-free.app"]
+  origin: ["http://127.0.0.1:3000","https://8e7e-197-232-61-247.ngrok-free.app","https://farmer-service-platform.onrender.com"]
 };
 
 app.use(cors(corsOptions));
@@ -23,3 +23,9 @@ module.exports = {
     app,
     PORT
 };
+
+
+
+https://github.com/alechost/Front_End_Farmer360/
+
+https://github.com/alechost/Back_End_Farmer360/
