@@ -8,7 +8,16 @@ const PORT = APP_SERVER_PORT;
 
 
 //app.use(cors({origin:['http://localhost:3000','https://ba93-197-232-61-218.ngrok-free.app']}));
-app.use(cors({}));
+
+
+const corsOptions ={
+   origin:'*', 
+   credentials:true,
+   optionSuccessStatus:200,
+}
+
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
