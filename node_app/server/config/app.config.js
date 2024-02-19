@@ -6,9 +6,11 @@ const {APP_SERVER_PORT} = require("../constants/constants");
 
 const PORT = APP_SERVER_PORT;
 
-//app.use(cors({origin:['http://localhost:3000','https://ba93-197-232-61-218.ngrok-free.app']}));
+const corsOptions = {
+  origin: "http://127.0.0.1:3000","https://8e7e-197-232-61-247.ngrok-free.app"
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
