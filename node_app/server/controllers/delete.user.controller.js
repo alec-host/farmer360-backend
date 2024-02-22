@@ -1,29 +1,35 @@
 const { AppwriteException } = require('node-appwrite');
+
 const { userSearch } = require('../model/search.user.model');
-const { storySearch } = require('../model/search.story.model');
+const { updateUserDetails } = require('../model/update.user.model');
 
-exports.GetStory = async(req,res) => {
-    const {owner_reference_number,email} = req.query;
+exports.DeleteUserAccount = async(req,res) => {
+    if(Object.keys(req.body).length !== 0){
 
-    if(owner_reference_number){ 
+        const { phone,reference_number,database_id,table_id,record_id } = req.body;
+
+        const json = {is_deleted:1};
+
+        const user_found = await userSearch(reference_number);
+
         try{
-            const user_found = await userSearch(owner_reference_number);
+            const db_configs = {database_id,table_id,record_id};
             if(user_found.total === 1){
-                if(owner_reference_number === user_found.documents[0]?.reference_number){
-                    const story_found = await storySearch(user_found.documents[0]?.reference_number);
-                    res.status(201).json({
+                const user = await updateUserDetails(db_configs,json);
+                if(phone === user.msisdn){
+                    res.status(200).json({
                         success: true,
                         error: false,
-                        data: story_found.documents,
-                        message: "Get a list of stories that belongs to you."
+                        data: [],
+                        message: "User account has been deactivated."
                     }); 
                 } 
             }else{
                 res.status(200).json({
                     success: false,
                     error: true,
-                    message: "User does not exist."
-                });            
+                    message: "User not found."
+                }); 
             }
         }catch(e){
             if(e instanceof AppwriteException){

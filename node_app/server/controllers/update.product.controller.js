@@ -38,16 +38,10 @@ exports.ModifyProduct = async(req,res) => {
             const product_found = await productSearch(product_reference_number);
 
             const db_configs = {database_id,table_id,record_id};
-            //console.log(product_found);
             if(product_found.total === 1){
                 const product = await model.updateProductDetails(db_configs,modify_product);
-                //console.log(product);
-                console.log(product_reference_number);
-                console.log(product.product_reference_number);
-                console.log(modify_product);
                 if(product_reference_number === product.product_reference_number){
                     const update_product = await getProduct(product.owner_reference_number);
-                    //console.log(update_product);
                     res.status(200).json({
                         success: true,
                         error: false,

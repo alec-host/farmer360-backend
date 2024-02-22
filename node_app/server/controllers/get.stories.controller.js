@@ -5,9 +5,6 @@ const { getStories } = require('../model/get.stories.model');
 
 exports.GetStories = async(req,res) => {
     const {owner_reference_number,email,_page,_limit} = req.query;
-    //const {email} = req.query;
-    //const {page} = req.query;
-    //const {limit} = req.query;
     if(owner_reference_number){ 
         try{
             const user_found = await userSearch(owner_reference_number);
@@ -24,7 +21,6 @@ exports.GetStories = async(req,res) => {
                             _last_id = '0';
                         }
                         stories_found = await getStories(parseInt(_limit),_last_id,0);
-                        console.log(stories_found);
                         res.status(200).json({
                             success: true,
                             error: false,

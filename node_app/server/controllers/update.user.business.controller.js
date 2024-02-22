@@ -11,8 +11,6 @@ exports.UpdateUserBusinessDetails = async(req,res) => {
         
         let image_id_url = null;
         let image_cert_url = null;
-        
-        console.log(req.files.id_file);
 
         const file_upload_1 = await mediaFileupload(req.files.id_file[0].path,'ID_'+id_number+'.png');
         if(file_upload_1.chunksUploaded >= 1){

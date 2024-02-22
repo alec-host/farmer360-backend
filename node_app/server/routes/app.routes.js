@@ -1,6 +1,7 @@
 //const { param } = require("express-validator");
 
 const auth = require("../middleware/auth");
+
 const uploadFile = require('../middleware/upload');
 const createUserController = require("../controllers/create.user.controller");
 const createBusinesssController = require("../controllers/create.business.controller");
@@ -32,6 +33,8 @@ const createApiRequestController = require("../controllers/create.business.api.r
 const createSurveyRequestController = require("../controllers/create.business.survey.request.controller");
 const createNoteAndTagController = require("../controllers/create.business.tag.controller");
 const updateBusinessDetailsController = require("../controllers/update.business.controller");
+const deleteUserAccountController = require("../controllers/delete.user.controller");
+const deleteBusinessAccountController = require("../controllers/delete.user.business.controller");
 const getStoriesAdminController = require("../controllers/admin/get.stories.admin.controller");
 const getCommentsAdminController = require("../controllers/admin/get.comments.admin.controller");
 const getInboxAdminController = require("../controllers/admin/get.inbox.admin.controller");
@@ -46,12 +49,14 @@ const adminSuspendUserAccountController = require("../controllers/admin/user.sus
 const error = require("./error/error.routes");
 /**
  * 
- * TO DO .. add auth in the routes below.
- * Implement JWT method on login & for security save the generated token in a session rather than a localStorage.
+ * TO DO .. 
+ * - add auth in the routes below.
+ * 
+ * Execute JWT method on login & for security save the generated token in a session rather than a localStorage.
  * 
  * auth is passed as shown below in a route:
  * 
- * route.post('/myRoute',auth,createController.MyNewValue);
+ * route.post('/createNewUser',auth,createController.MyNewValue);
  * 
  */
 module.exports = async(app) => {
@@ -91,6 +96,8 @@ module.exports = async(app) => {
     router.post('/createSurveyRequest',createSurveyRequestController.CreateNewSurveyRequest);
     router.post('/createNoteAndTag',createNoteAndTagController.CreateNewNoteAndTag);
     router.patch('/changeBusinessAccountPassword',updateBusinessDetailsController.UpdateBusinessProfileDetails);
+    router.patch('/deleteUserAccount',deleteUserAccountController.DeleteUserAccount);
+    router.patch('/deleteBusinessAccount',deleteBusinessAccountController.DeleteUserBusinessAccount);
     router.patch('/verifyPhoneNumber',phoneNumberVerificationController.VerifyPhoneNumber);
     router.get('/adminGetAllStories',getStoriesAdminController.AdminGetAllStories);
     router.get('/adminGetAllComments',getCommentsAdminController.AdminGetAllComments);

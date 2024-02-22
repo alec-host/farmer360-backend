@@ -10,7 +10,6 @@ exports.GetProduct = async(req,res) => {
         try{
             const mail_found = await mailSearch(email);
             const product_found = await getProduct(owner_reference_number);
-            console.log(mail_found);
             if(mail_found.total === 1){
                 if(product_found.total > 0){
                     if(mail_found.owner_reference_number === product_found.owner_reference_number){
@@ -37,7 +36,6 @@ exports.GetProduct = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

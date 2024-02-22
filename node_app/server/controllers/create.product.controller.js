@@ -12,9 +12,6 @@ exports.CreateNewProduct = async(req,res) => {
         
         try{   
             
-            console.log(req.file.filename);
-            console.log(req.file.path);
-            console.log(original_file_name);
             const file_upload = await mediaFileupload(req.file.path,original_file_name);
           
             if(file_upload.chunksUploaded >= 1){
@@ -37,7 +34,6 @@ exports.CreateNewProduct = async(req,res) => {
                         const created_product = await createNewProduct(product);
                         if(product.owner_reference_number === created_product.owner_reference_number){
                             const product_found = await getProduct(product.owner_reference_number);
-                            console.log(product_found);
                             res.status(201).json({
                                 success: true,
                                 error: false,
@@ -55,7 +51,6 @@ exports.CreateNewProduct = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

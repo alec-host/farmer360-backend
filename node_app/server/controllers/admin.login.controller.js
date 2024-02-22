@@ -1,20 +1,22 @@
 const { AppwriteException } = require('node-appwrite');
-//const { compare } = require('bcrypt');;
+const { adminAuthentication } = require('../model/admin.login.model');
+
+const { compare } = require('bcrypt');
 
 exports.AdminLogin = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
         const {username,password} = req.body;
         try{
-            //const allowed_access = await compare(password,found?.documents[0]?.password);
-            const allowed_access = 1;
+            console.log(username);
+            const admin_found = await adminAuthentication();
+            
+            const allowed_access = await compare(password.trim(),JSON.parse(admin_found)[0].password.toString());
+
             if(allowed_access){
-                console.log("Login Successful");
-                console.log("after pass ");
-                console.log(allowed_access);
                 res.status(200).json({
                     success: true,
                     error: false,
-                    data: [],
+                    data: JSON.parse(admin_found),
                     message: "Login Successful"
                 });                   
             }else{

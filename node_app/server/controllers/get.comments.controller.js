@@ -18,8 +18,6 @@ exports.GetComments = async(req,res) => {
                         }else{
                             _last_id = '0';
                         }
-                        console.log(_page);
-                        console.log(_last_id);
                         comments_found = await getComments(parseInt(_limit),story_uuid,_last_id,0);
                         res.status(200).json({
                             success: true,

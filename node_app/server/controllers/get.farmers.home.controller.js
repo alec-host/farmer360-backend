@@ -1,5 +1,4 @@
 const { AppwriteException } = require('node-appwrite');
-const { mailBusinessSearch } = require('../model/search.email.business.model');
 const { getFarmers } = require('../model/get.farmers.model');
 
 exports.GetFarmersHomePage = async(req,res) => {
@@ -15,10 +14,7 @@ exports.GetFarmersHomePage = async(req,res) => {
                 }else{
                     _last_id = '0';
                 }
-                console.log(_last_id);
-                console.log(_page);
                 farmers_found = await getFarmers(parseInt(_limit),_last_id);
-                console.log(farmers_found);
                 res.status(200).json({
                     success: true,
                     error: false,
@@ -34,7 +30,6 @@ exports.GetFarmersHomePage = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

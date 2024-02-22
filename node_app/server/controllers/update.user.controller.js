@@ -43,9 +43,6 @@ exports.UpdateUserProfileDetails = async(req,res) => {
             break;
         };
 
-        console.log('sssssssssssssssssssssssssssssssssssssss');
-        console.log(data);
-
         try{
 
             const phone_found = await phoneSearch(phone);
@@ -57,8 +54,6 @@ exports.UpdateUserProfileDetails = async(req,res) => {
                 if(email_found.total == 1){
                     const user = await updateUserDetails(db_configs,json);
                     const updated_data = await mailSearch(user.email);
-                    console.log(updated_data);
-                    console.log('ttttttttttttttttttttttttttttttttttt');
                     res.status(200).json({
                         success: true,
                         error: false,

@@ -12,7 +12,6 @@ exports.GetInbox = async(req,res) => {
             if(parseInt(mail_found.total) === 1){
                 if(inbox_found.total > 0){
                     if(mail_found.owner_reference_number === inbox_found.recipient_uuid){
-                        console.log(inbox_found.documents);
                         const filtered_array = inbox_found.documents.filter((item) => item.recipient_uuid === owner_reference_number || item.sender_uuid === owner_reference_number);
                         res.status(200).json({
                             success: true,

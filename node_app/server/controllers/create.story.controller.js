@@ -11,8 +11,6 @@ exports.CreateNewStory = async(req,res) => {
         const {posted_story,topic,is_profane,owner_reference_number,full_name,original_file_name,date_created,action} = req.body;
         try{
             const user_found = await userSearch(owner_reference_number);
-            console.log(user_found);
-            console.log(action);
             if(parseInt(user_found.total) === 1){ 
                 let has_profane_words = 0;
                 if(is_profane === false){
@@ -34,9 +32,9 @@ exports.CreateNewStory = async(req,res) => {
                                                 has_profane_words:has_profane_words,
                                                 date_created:date_created
                                             };
-                        console.log(create_story);
+
                         const story = await model.createNewStory(create_story);
-                        console.log(story);
+
                         if(owner_reference_number === story.user_uuid){
                             const story_found = await storySearch(story.user_uuid);
                             res.status(201).json({
@@ -57,9 +55,9 @@ exports.CreateNewStory = async(req,res) => {
                                             has_profane_words:has_profane_words,
                                             date_created:date_created
                                         };  
-                    console.log(create_story);
+                   
                     const story = await model.createNewStory(create_story);
-                    console.log(story);
+               
                     if(owner_reference_number === story.user_uuid){
                         const story_found = await storySearch(story.user_uuid);
                         res.status(201).json({

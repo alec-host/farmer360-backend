@@ -36,10 +36,7 @@ exports.CreateNewInbox = async(req,res) => {
                     sender_uuid:sender_uuid,
                     date_created:date_created
                 };                                
-            }else{ 
-                console.log(action);
-                console.log(sender_uuid);  
-                console.log(recipient_uuid);    
+            }else{    
                 exist = await userSearch(recipient_uuid); 
                 inbox = {
                     message_uuid:"MSG"+uuidv4(),
@@ -70,7 +67,6 @@ exports.CreateNewInbox = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

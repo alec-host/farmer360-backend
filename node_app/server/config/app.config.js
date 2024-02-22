@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
@@ -6,13 +7,17 @@ const {APP_SERVER_PORT} = require("../constants/constants");
 
 const PORT = APP_SERVER_PORT;
 
-const corsOptions = {
-  origin: ["http://127.0.0.1:3000","http://localhost"]
+const allowedOrigins = ['http://localhost:3000','https://68bf-197-232-61-197.ngrok-free.app/'];
+
+const options = {
+  origin: allowedOrigins
 };
 
-app.use(cors(corsOptions));
 
+app.use(cors());
 app.use(express.json());
+
+app.use(morgan('tiny'));
 
 app.use(express.static('uploads'));
 
@@ -23,9 +28,3 @@ module.exports = {
     app,
     PORT
 };
-
-
-
-https://github.com/alechost/Front_End_Farmer360/
-
-https://github.com/alechost/Back_End_Farmer360/

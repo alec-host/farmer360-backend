@@ -18,10 +18,7 @@ exports.GetFarmers = async(req,res) => {
                         }else{
                             _last_id = '0';
                         }
-                        console.log(_last_id);
-                        console.log(_page);
                         farmers_found = await getFarmers(parseInt(_limit),_last_id);
-                        console.log(farmers_found);
                         res.status(200).json({
                             success: true,
                             error: false,
@@ -45,7 +42,6 @@ exports.GetFarmers = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

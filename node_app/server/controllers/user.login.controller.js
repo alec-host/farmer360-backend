@@ -13,11 +13,9 @@ exports.UserLogin = async(req,res) => {
             switch(''+account_type.trim()){
                 case "farmer": 
                     found = await mailSearch(username);
-                    console.log('farmer');
                 break;
                 case "business": 
                     found = await mailBusinessSearch(username);
-                    console.log('business');
                 break;
                 default:
                 break;
@@ -26,18 +24,20 @@ exports.UserLogin = async(req,res) => {
             if(found.total == 1){
                 const allowed_access = await compare(password,found?.documents[0]?.password);
                 if(allowed_access){
-                    console.log("Login Successful");
-                    console.log("after pass ");
-                    console.log(allowed_access);
-                    console.log(found?.documents[0].$databaseId);
-                    console.log(found?.documents[0].$collectionId);
-                    console.log(found?.documents[0].$id);
-                    res.status(200).json({
-                        success: true,
-                        error: false,
-                        data: found.documents,
-                        message: "Login Successful"
-                    });                   
+                    if(found?.documents[0]?.is_deleted === 0){
+                        res.status(200).json({
+                            success: true,
+                            error: false,
+                            data: found.documents,
+                            message: "Login Successful"
+                        });  
+                    }else{
+                        res.status(200).json({
+                            success: false,
+                            error: true,
+                            message: "Account does not exist."
+                        });                        
+                    }                 
                 }else{
                     res.status(200).json({
                         success: false,

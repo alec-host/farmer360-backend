@@ -25,7 +25,6 @@ exports.ModifyShop = async(req,res) => {
             const db_configs = {database_id,table_id,record_id};
             if(shop_found.total === 1){
                 const shop = await model.updateShopDetails(db_configs,json);
-                console.log(shop);
                 if(phone_number === shop.phone_number){
                     const update_shop = await shopSearch(shop.owner_reference_number);
                     res.status(200).json({
@@ -44,7 +43,6 @@ exports.ModifyShop = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,

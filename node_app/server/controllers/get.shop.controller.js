@@ -9,7 +9,7 @@ exports.GetShop = async(req,res) => {
         try{
             const mail_found = await mailSearch(email);
             const shop_found = await shopSearch(owner_reference_number);
-            console.log(shop_found);
+
             if(mail_found.total === 1){
                 if(shop_found.total === 1){
                     if(mail_found.owner_reference_number === shop_found.owner_reference_number){
@@ -36,7 +36,6 @@ exports.GetShop = async(req,res) => {
             }
         }catch(e){
             if(e instanceof AppwriteException){
-                console.log(e);
                 res.status(200).json({
                     success: false,
                     error: true,
