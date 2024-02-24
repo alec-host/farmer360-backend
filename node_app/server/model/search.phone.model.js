@@ -8,7 +8,7 @@ const { APP_WRITE_DATABASE_ID, APP_WRITE_COLLECTION_ID_FARMERS } = require('../c
 
 const phoneSearch = async(msisdn) => {
   
-    const promise = await databases.listDocuments(APP_WRITE_DATABASE_ID,APP_WRITE_COLLECTION_ID_FARMERS,[Query.equal('msisdn',msisdn),]);
+    const promise = await databases.listDocuments(APP_WRITE_DATABASE_ID,APP_WRITE_COLLECTION_ID_FARMERS,[Query.equal('msisdn',msisdn)]);
 
     return promise;
 };

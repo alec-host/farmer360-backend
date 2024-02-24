@@ -6,11 +6,10 @@ const { phoneBusinessSearch } = require('../model/search.phone.business.model');
 exports.VerifyPhoneNumber = async(req,res) => {
     if(Object.keys(req.body).length !== 0){
        
-        const { phone,is_verified,entity_type,database_id,table_id,record_id } = req.body;
-
+        const { phone,is_verified,entity_type} = req.body;
         try{
+            let phone_found = {};
 
-            const phone_found = {};
             if(entity_type === "farmer"){
                 phone_found = await phoneSearch(phone);
             }else {
@@ -18,24 +17,30 @@ exports.VerifyPhoneNumber = async(req,res) => {
             }
 
             const json = {is_verified};
+
+            const database_id = phone_found.documents[0].$databaseId;
+            const table_id = phone_found.documents[0].$collectionId;
+            const record_id = phone_found.documents[0].$id;
             
             const db_configs = {database_id,table_id,record_id};
-            
+
             if(phone_found.total === 1){
                 const user = await updateUserDetails(db_configs,json);
-                if(phone === user.phone)
-                res.status(200).json({
-                    success: true,
-                    error: false,
-                    data: [],
-                    message: "Update was successful."
-                }); 
-            }else{
-                res.status(200).json({
-                    success: false,
-                    error: true,
-                    message: "Phone not found."
-                });                   
+
+                if(phone === user.msisdn || phone === user.phone){
+                    res.status(200).json({
+                        success: true,
+                        error: false,
+                        data: [],
+                        message: "Update was successful."
+                    }); 
+                }else{
+                    res.status(200).json({
+                        success: false,
+                        error: true,
+                        message: "Phone not found."
+                    });
+                }                 
             }
         }catch(e){
             if(e instanceof AppwriteException){
